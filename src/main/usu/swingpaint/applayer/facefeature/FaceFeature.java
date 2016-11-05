@@ -1,17 +1,19 @@
-package main.usu.swingpaint;
+package main.usu.swingpaint.applayer.facefeature;
 
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-public class DraggableComponent extends JComponent {
+public class FaceFeature extends JComponent {
 
+  private Point location;
+  private float scale;
   private volatile int screenX = 0;
   private volatile int screenY = 0;
   private volatile int myX = 0;
   private volatile int myY = 0;
 
-  public DraggableComponent() {
+  public FaceFeature() {
     setBounds(0, 0, 100, 100);
     setOpaque(false);
 

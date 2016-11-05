@@ -1,108 +1,26 @@
 package main.usu.swingpaint;
 
+import main.usu.swingpaint.applayer.command.Command;
+import main.usu.swingpaint.applayer.command.CommandFactory;
+import main.usu.swingpaint.applayer.command.Invoker;
+import main.usu.swingpaint.applayer.receiver.Drawing;
+import main.usu.swingpaint.applayer.facefeature.FaceFeatureWithAllStates;
+
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
-import javax.swing.*;
-import javax.swing.border.LineBorder;
 
 public class SwingPaint {
-    private static final String IMAGES_PATH = "/images/";
-    private JButton clearBtn, removeBtn, duplicateBtn;
+    private JButton clearBtn, removeBtn, duplicateBtn, saveBtn, loadBtn, undoBtn;
     private JButton eyeBtn, noseBtn, earBtn, lipsBtn;
-
-    private DraggableImageComponent selectedImage = null;
-
     private JPanel canvas;
 
-    private ActionListener actionListener = new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent event) {
-            if (event.getSource() == clearBtn) {
-                clear();
-            } else if (event.getSource() == eyeBtn) {
-                addFeature(new Eye());
-            } else if (event.getSource() == noseBtn) {
-                addFeature(new Nose());
-            } else if (event.getSource() == earBtn) {
-                addFeature(new Ear());
-            } else if (event.getSource() == lipsBtn) {
-                addFeature(new Lips());
-            } else if (event.getSource() == removeBtn) {
-                removeSelectedImage();
-            } else if (event.getSource() == duplicateBtn) {
-                duplicateSelectedImage();
-            }
-        }
-    };
-
-//    private void addEye() {
-//        java.awt.EventQueue.invokeLater(new Runnable() {
-//            @Override
-//            public void run() {
-//                addNewPhoto("image.png");
-//            }
-//        });
-//    }
-//
-//    private void addNose() {
-//        java.awt.EventQueue.invokeLater(new Runnable() {
-//            @Override
-//            public void run() {
-//                addNewPhoto("image.png");
-//            }
-//        });
-//    }
-
-    private void addFeature(FaceFeature faceFeature) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                AddFaceFeature addFaceFeature = new AddFaceFeature(faceFeature);
-                BufferedImage image = addFaceFeature.execute();
-
-                DraggableImageComponent photo = new DraggableImageComponent();
-                canvas.add(photo);
-                photo.setImage(image);
-                photo.setAutoSize(true);
-                photo.setBorder(new LineBorder(Color.black, 1));
-
-                canvas.repaint();
-//        addNewPhoto("image.png");
-            }
-        });
-    }
-//
-//    private void addLips() {
-//        java.awt.EventQueue.invokeLater(new Runnable() {
-//            @Override
-//            public void run() {
-//                addNewPhoto("image.png");
-//            }
-//        });
-//    }
-
-    private void removeSelectedImage() {
-        if (selectedImage != null) {
-            canvas.remove(selectedImage);
-        }
-        canvas.repaint();
-    }
-
-    private void duplicateSelectedImage() {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                addNewPhoto("image.png");
-            }
-        });
-    }
+    private Invoker invoker = new Invoker();
+    private CommandFactory commandFactory;
+    private FaceFeatureWithAllStates selectedImage = null;
 
     void show() {
         JFrame frame = new JFrame("Swing paint");
@@ -115,8 +33,12 @@ public class SwingPaint {
 
         buildCanvas();
         frame.add(canvas, BorderLayout.CENTER);
-        loadImages();
+
+        canvas.repaint();
+        Drawing drawing = new Drawing(canvas);
+        commandFactory = new CommandFactory(drawing);
     }
+
 
     private void buildCanvas() {
         canvas = new JPanel();
@@ -125,22 +47,17 @@ public class SwingPaint {
         canvas.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                if (e.getSource().getClass().equals(DraggableImageComponent.class)) {
-                    selectedImage = (DraggableImageComponent) e.getSource();
+                if (e.getSource().getClass().equals(FaceFeatureWithAllStates.class)) {
+                    selectedImage = (FaceFeatureWithAllStates) e.getSource();
                 }
             }
         });
     }
 
-    private void loadImages() {
-        EventQueue.invokeLater(() -> addNewPhoto("image.png"));
-        clear();
-    }
-
     private JPanel buildButtonPanel() {
         JPanel controls = new JPanel();
 
-        clearBtn = new JButton("Clear");
+        clearBtn = new JButton("clear");
         clearBtn.addActionListener(actionListener);
         eyeBtn = new JButton("Eye");
         eyeBtn.addActionListener(actionListener);
@@ -154,6 +71,12 @@ public class SwingPaint {
         removeBtn.addActionListener(actionListener);
         duplicateBtn = new JButton("Duplicate");
         duplicateBtn.addActionListener(actionListener);
+        saveBtn = new JButton("Save");
+        saveBtn.addActionListener(actionListener);
+        loadBtn = new JButton("Load");
+        loadBtn.addActionListener(actionListener);
+        undoBtn = new JButton("undo");
+        undoBtn.addActionListener(actionListener);
 
         controls.add(clearBtn);
         controls.add(eyeBtn);
@@ -162,29 +85,52 @@ public class SwingPaint {
         controls.add(lipsBtn);
         controls.add(removeBtn);
         controls.add(duplicateBtn);
+        controls.add(saveBtn);
+        controls.add(loadBtn);
+        controls.add(undoBtn);
 
         return controls;
     }
 
+    private ActionListener actionListener = new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent event) {
+            if (event.getSource() == eyeBtn) {
+                Command command = commandFactory.create("add","eye");
+                invoker.enqueueAndExecuteCommand(command);
+            } else if (event.getSource() == noseBtn) {
+                Command command = commandFactory.create("add","nose");
+                invoker.enqueueAndExecuteCommand(command);
+            } else if (event.getSource() == earBtn) {
+                Command command = commandFactory.create("add", "ear");
+                invoker.enqueueAndExecuteCommand(command);
+            } else if (event.getSource() == lipsBtn) {
+                Command command = commandFactory.create("add", "lips");
+                invoker.enqueueAndExecuteCommand(command);
+            } else if (event.getSource() == removeBtn) {
+                Command command = commandFactory.create("remove", selectedImage);
+                invoker.enqueueAndExecuteCommand(command);
+            } else if (event.getSource() == duplicateBtn) {
+                Command command = commandFactory.create("duplicate", selectedImage);
+                invoker.enqueueAndExecuteCommand(command);
+            } else if (event.getSource() == saveBtn) {
+                Command command = commandFactory.create("save");
+                invoker.enqueueAndExecuteCommand(command);
+            } else if (event.getSource() == loadBtn) {
+                Command command = commandFactory.create("load");
+                invoker.enqueueAndExecuteCommand(command);
+            } else if (event.getSource() == undoBtn) {
+                invoker.undo();
+            } else if (event.getSource() == clearBtn) {
+//                Command command = commandFactory.create("clear");
+//                invoker.enqueueAndExecuteCommand(command);
+                clear();
+            }
+        }
+    };
+
     private void clear() {
         canvas.removeAll();
-        canvas.repaint();
-    }
-
-    private void addNewPhoto(String fileName) {
-        BufferedImage image = null;
-        try {
-            image = ImageIO.read(this.getClass().getResource(IMAGES_PATH + fileName));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        DraggableImageComponent photo = new DraggableImageComponent();
-        canvas.add(photo);
-        photo.setImage(image);
-        photo.setAutoSize(true);
-        photo.setBorder(new LineBorder(Color.black, 1));
-
         canvas.repaint();
     }
 }
