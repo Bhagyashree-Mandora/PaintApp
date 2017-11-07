@@ -1,7 +1,7 @@
 version: 2
 jobs:
    build:
-         working_directory: ~/project
+         working_directory: ~/PaintApp
 
          docker:
            - image: circleci/openjdk:8-jdk-browsers
@@ -20,20 +20,20 @@ jobs:
            - run:
                name: Save test results
                command: |
-                 mkdir -p ~/junit/
-                 find . -type f -regex ".*/build/test-results/.*xml" -exec cp {} ~/junit/ \;
+                 mkdir -p $CIRCLE_TEST_REPORTS/junit/
+                 find . -type f -regex ".*/build/test-results/.*xml" -exec cp {} $CIRCLE_TEST_REPORTS/junit/ \;
                when: always
            - store_test_results:
-               path: ~/junit
+               path: $CIRCLE_TEST_REPORTS/junit
 
            # save the current dependencies state as a cache state
            - save_cache:
                key: v1-PaintApp-{{ checksum "build.gradle" }}
                paths:
-                   - lib
+                   - /lib
 
            # store the jar produced
            - store_artifacts:
-               path: build/libs/PaintApp-1.0.jar
+               path: /build/libs/
 
 
