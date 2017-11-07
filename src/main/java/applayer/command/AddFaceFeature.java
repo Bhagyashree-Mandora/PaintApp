@@ -1,8 +1,8 @@
-package main.usu.swingpaint.applayer.command;
+package main.java.applayer.command;
 
-import main.usu.swingpaint.applayer.facefeature.FaceFeature;
-import main.usu.swingpaint.applayer.facefeature.FaceFeatureExtrinsicState;
-import main.usu.swingpaint.applayer.facefeature.FaceFeatureFactory;
+import main.java.applayer.facefeature.FaceFeature;
+import main.java.applayer.facefeature.FaceFeatureFactory;
+import main.java.applayer.facefeature.FaceFeatureExtrinsicState;
 
 import java.awt.*;
 

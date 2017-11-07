@@ -1,4 +1,4 @@
-package main.usu.swingpaint.applayer.facefeature;
+package main.java.applayer.facefeature;
 
 import java.awt.*;
 

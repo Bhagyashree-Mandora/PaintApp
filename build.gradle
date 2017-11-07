@@ -1,0 +1,69 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'idea'
+    id 'eclipse'
+}
+
+description = 'A drag and drop cartoon face designer'
+version = '1.0'
+//sourceCompatibility = 1.8
+//targetCompatibility = 1.8
+
+mainClassName = 'PaintApp'
+
+defaultTasks 'clean', 'build'
+
+project.ext {
+
+// libs
+    gson = 'com.google.code.gson:gson:2.2'
+
+//    test libs
+    junit = 'junit:junit:4.12'
+    mockito = 'org.mockito:mockito-core:2.11.0'
+    //mockito = 'org.mockito:mockito-all:1.10.19'
+}
+
+repositories {
+    mavenCentral()
+}
+
+//configurations {
+//    compile
+//    tests
+//}
+
+dependencies {
+    compile(project.ext.gson)
+    testCompile(project.ext.junit, project.ext.mockito)
+}
+
+sourceSets {
+    test {
+        java.srcDirs = ['src/test/']
+    }
+}
+
+jar {
+        baseName = rootProject.name
+        version =  version
+
+    manifest {
+        attributes  'Main-Class': mainClassName,
+                    'Implementation-Title': rootProject.name,
+                    'Implementation-Version': version
+                    //'Class-Path': configurations.runtime.files.collect { "lib/$it.name" }.join(' ')
+    }
+//    doLast {
+//        copy {
+//            from (configurations.compile.asPath.split(File.pathSeparator))
+//            into "$libsDir"
+//        }
+//    }
+
+//    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+//    with jar
+}
+
+build.dependsOn = ['clean', 'test', 'jar']

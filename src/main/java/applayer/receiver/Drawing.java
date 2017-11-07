@@ -1,11 +1,11 @@
-package main.usu.swingpaint.applayer.receiver;
+package main.java.applayer.receiver;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import main.usu.swingpaint.applayer.facefeature.FaceFeature;
-import main.usu.swingpaint.applayer.facefeature.FaceFeatureExtrinsicState;
-import main.usu.swingpaint.applayer.facefeature.FaceFeatureFactory;
-import main.usu.swingpaint.applayer.facefeature.FaceFeatureWithAllStates;
+import main.java.applayer.facefeature.FaceFeature;
+import main.java.applayer.facefeature.FaceFeatureFactory;
+import main.java.applayer.facefeature.FaceFeatureWithAllStates;
+import main.java.applayer.facefeature.FaceFeatureExtrinsicState;
 
 import javax.swing.*;
 import java.io.*;

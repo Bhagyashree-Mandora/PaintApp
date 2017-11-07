@@ -1,4 +1,20 @@
-/out/**
+# idea project files
 .idea/
 *.iml
 
+
+# Project generated files
+savedDrawing
+
+
+# Other generated files
+/out/**
+
+
+# Java build artifacts class files
+.class
+
+
+# Gradle build files
+build/
+.gradle/*

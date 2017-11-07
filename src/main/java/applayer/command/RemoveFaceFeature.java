@@ -1,6 +1,6 @@
-package main.usu.swingpaint.applayer.command;
+package main.java.applayer.command;
 
-import main.usu.swingpaint.applayer.facefeature.FaceFeature;
+import main.java.applayer.facefeature.FaceFeature;
 
 public class RemoveFaceFeature extends Command {
 

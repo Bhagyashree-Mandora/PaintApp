@@ -1,13 +1,13 @@
-package main.usu.swingpaint.applayer.command;
+package main.java.applayer.command;
 
-import main.usu.swingpaint.applayer.receiver.Drawing;
+import main.java.applayer.receiver.Drawing;
 
 public abstract class Command {
     protected Drawing drawing;
 
     public void execute(){}
 
-    void setDrawing(Drawing drawing){
+    public void setDrawing(Drawing drawing){
         this.drawing = drawing;
     }
 

@@ -1,8 +1,10 @@
-package main.usu.swingpaint.applayer.command;
+package main.java.applayer.command;
 
-import main.usu.swingpaint.applayer.facefeature.FaceFeatureExtrinsicState;
-import main.usu.swingpaint.applayer.facefeature.FaceFeatureFactory;
-import main.usu.swingpaint.applayer.facefeature.FaceFeature;
+import main.java.applayer.facefeature.FaceFeature;
+import main.java.applayer.facefeature.FaceFeatureExtrinsicState;
+import main.java.applayer.facefeature.FaceFeatureFactory;
+
+import java.awt.*;
 
 public class DuplicateFaceFeature extends Command {
 
@@ -17,6 +19,7 @@ public class DuplicateFaceFeature extends Command {
     public void execute() {
         FaceFeatureExtrinsicState extrinsicState = new FaceFeatureExtrinsicState();
         extrinsicState.setFeatureType(faceFeatureType);
+        extrinsicState.setLocation(new Point(0,0));
         faceFeature = FaceFeatureFactory.create(extrinsicState);
         drawing.add(faceFeature);
     }

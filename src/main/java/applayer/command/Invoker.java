@@ -1,6 +1,4 @@
-package main.usu.swingpaint.applayer.command;
-
-import main.usu.swingpaint.applayer.command.Command;
+package main.java.applayer.command;
 
 import java.util.ArrayList;
 import java.util.List;

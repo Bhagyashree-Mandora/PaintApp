@@ -1,4 +1,4 @@
-package main.usu.swingpaint.applayer.command;
+package main.java.applayer.command;
 
 public class Save extends Command {
 

@@ -1,9 +1,9 @@
-package main.usu.swingpaint.applayer.command;
+package main.java.applayer.command;
 
 
-import main.usu.swingpaint.applayer.receiver.Drawing;
-import main.usu.swingpaint.applayer.facefeature.FaceFeature;
-import main.usu.swingpaint.applayer.facefeature.FaceFeatureWithAllStates;
+import main.java.applayer.facefeature.FaceFeatureWithAllStates;
+import main.java.applayer.receiver.Drawing;
+import main.java.applayer.facefeature.FaceFeature;
 
 public class CommandFactory {
 

@@ -1,10 +1,10 @@
-package main.usu.swingpaint;
+package main.java;
 
-import main.usu.swingpaint.applayer.command.Command;
-import main.usu.swingpaint.applayer.command.CommandFactory;
-import main.usu.swingpaint.applayer.command.Invoker;
-import main.usu.swingpaint.applayer.receiver.Drawing;
-import main.usu.swingpaint.applayer.facefeature.FaceFeatureWithAllStates;
+import main.java.applayer.command.Command;
+import main.java.applayer.command.CommandFactory;
+import main.java.applayer.command.Invoker;
+import main.java.applayer.facefeature.FaceFeatureWithAllStates;
+import main.java.applayer.receiver.Drawing;
 
 import javax.swing.*;
 import java.awt.*;

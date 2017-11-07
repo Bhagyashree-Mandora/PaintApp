@@ -1,4 +1,4 @@
-package main.usu.swingpaint.applayer.facefeature;
+package main.java.applayer.facefeature;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -6,7 +6,7 @@ import java.io.IOException;
 
 public class FaceFeatureWithIntrinsicState extends FaceFeature {
 
-    private static final String IMAGES_PATH = "/images/";
+    private static final String IMAGES_PATH = "/main/resources/images/";
 
     BufferedImage image;
 
