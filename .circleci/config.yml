@@ -16,6 +16,11 @@ jobs:
 #                 - v1-PaintApp-{{ checksum "build.gradle" }}
 #                 - v1-PaintApp-{{ .Branch }}
 
+           - run:
+               name: run gradle
+               command: |
+                  ./gradlew build
+
            # collect test metadata from XML files from the build and use it to provide insights into the build.
            - run:
                name: Save test results
