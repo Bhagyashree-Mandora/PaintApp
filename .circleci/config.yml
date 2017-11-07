@@ -25,11 +25,11 @@ jobs:
            - run:
                name: Save test results
                command: |
-                 mkdir -p $CIRCLE_TEST_REPORTS/unit-tests/
-                 find . -type f -regex ".*/build/test-results/.*xml" -exec cp {} $CIRCLE_TEST_REPORTS/unit-tests/ \;
+                 mkdir -p /tmp/junit/
+                 find . -type f -regex ".*/build/test-results/.*xml" -exec cp {} /tmp/junit/ \;
                when: always
            - store_test_results:
-               path: $CIRCLE_TEST_REPORTS/unit-tests/
+               path: /tmp/junit/
 
            # save the current dependencies state as a cache state
            - save_cache:
