@@ -22,7 +22,6 @@ project.ext {
 //    test libs
     junit = 'junit:junit:4.12'
     mockito = 'org.mockito:mockito-core:2.11.0'
-    //mockito = 'org.mockito:mockito-all:1.10.19'
 }
 
 repositories {

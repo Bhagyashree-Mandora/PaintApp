@@ -11,31 +11,31 @@ jobs:
 
            # Use dependencies from cache
            - restore_cache:
-               key: v1-PaintApp-{{ checksum "build.gradle" }}
+               key: jars-{{ checksum "build.gradle" }}
 #               keys:
 #                 - v1-PaintApp-{{ checksum "build.gradle" }}
 #                 - v1-PaintApp-{{ .Branch }}
 
            - run:
-               name: run gradle
+               name: run build
                command: |
                   ./gradlew build
+
+           # save the current dependencies state as a cache state
+           - save_cache:
+               key: jars-{{ checksum "build.gradle" }}
+               paths:
+                   - ~/.gradle
 
            # collect test metadata from XML files from the build and use it to provide insights into the build.
            - run:
                name: Save test results
                command: |
                  mkdir -p /tmp/junit/
-                 find . -type f -regex ".*/build/test-results/.*xml" -exec cp {} /tmp/junit/ \;
+                 find . -type f -regex ".*/build/test-results/test/.*xml" -exec cp {} /tmp/junit/ \;
                when: always
            - store_test_results:
                path: /tmp/junit/
-
-           # save the current dependencies state as a cache state
-           - save_cache:
-               key: v1-PaintApp-{{ checksum "build.gradle" }}
-               paths:
-                   - /lib
 
            # store the jar produced
            - store_artifacts:
