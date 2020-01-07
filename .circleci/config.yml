@@ -27,13 +27,7 @@ jobs:
                paths:
                    - ~/.gradle
 
-           # collect test metadata from XML files from the build and use it to provide insights into the build.
-#           - run:
-#               name: Save test results
-#               command: |
-#                 mkdir -p /tmp/junit/
-#                 find . -type f -regex ".*/build/test-results/test/.*xml" -exec cp {} /tmp/junit/ \;
-#               when: always
+           # store test results from XML files from the build and use it to provide insights into the build.
            - store_test_results:
                path: build/test-results
 

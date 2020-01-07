@@ -10,7 +10,7 @@ version = '1.0'
 //sourceCompatibility = 1.8
 //targetCompatibility = 1.8
 
-mainClassName = 'PaintApp'
+mainClassName = 'main.java.PaintApp'
 
 defaultTasks 'clean', 'build'
 
